@@ -12,14 +12,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData theme = ThemeData();
     SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(statusBarColor: Colors.transparent)
+         const SystemUiOverlayStyle(statusBarColor: Colors.transparent)
     );
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'ToDo',
       theme: theme.copyWith(
         colorScheme: theme.colorScheme.copyWith(
-          primary: Colors.white,
+          primary: const Color(0xFFF6F8FA),
           secondary: Colors.blueGrey,
         ),
         appBarTheme: const AppBarTheme(
@@ -33,8 +33,6 @@ class MyApp extends StatelessWidget {
         ),
         textTheme: theme.textTheme.copyWith(
           bodyText1: const TextStyle(
-            // fontSize: 20,
-            // fontFamily: 'Raleway',
             color: Colors.black,
           ),
           bodyText2: const TextStyle(
@@ -52,3 +50,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
