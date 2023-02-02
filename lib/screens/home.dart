@@ -17,14 +17,11 @@ class _HomeState extends State<Home> {
         elevation: 0,
         title: const Text('ToDo'),
       ),
-      body: Card(
-          elevation: 0,
-          color: Colors.white,
-          child: Text(
-            'Todo app',
-            style: Theme.of(context).textTheme.headline6,
-          ),
-        ),
+      floatingActionButton: const FloatingActionButton(
+        onPressed: null,
+        child: Icon(Icons.add),
+      ),
+      body: const Text('Hello'),
     );
   }
 }
