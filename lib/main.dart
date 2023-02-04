@@ -22,6 +22,9 @@ class MyApp extends StatelessWidget {
           primary: const Color(0xFFF6F8FA),
           secondary: Colors.blueGrey,
         ),
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Colors.blueGrey,
+        ),
         appBarTheme: const AppBarTheme(
           titleTextStyle: TextStyle(
             fontFamily: 'Raleway',

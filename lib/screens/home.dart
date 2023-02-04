@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '/main.dart';
+import './search.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -21,7 +22,10 @@ class _HomeState extends State<Home> {
         onPressed: null,
         child: Icon(Icons.add),
       ),
-      body: const Text('Hello'),
+      body: Container(
+        padding: const EdgeInsets.all(15),
+            child: Search()
+      ),
     );
   }
 }
