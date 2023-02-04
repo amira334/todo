@@ -20,12 +20,13 @@ class _SearchState extends State<Search> {
       child: TextField(
         cursorColor: Theme.of(context).textSelectionTheme.cursorColor,
         decoration: InputDecoration(
+          //labelText: 'Search',
             contentPadding: EdgeInsets.all(0),
           prefixIcon: Icon(Icons.search,
           color: Theme.of(context).colorScheme.secondary,
           size: 20,),
           prefixIconConstraints: BoxConstraints(
-              maxHeight: 20,
+            maxHeight: 20,
             minWidth: 20,
           ),
           border: InputBorder.none,

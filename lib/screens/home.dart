@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '/main.dart';
 import './search.dart';
+//import 'package:intl/intl.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -24,8 +25,31 @@ class _HomeState extends State<Home> {
       ),
       body: Container(
         padding: const EdgeInsets.all(15),
-            child: Search()
-      ),
-    );
+        child: Stack(
+            children: [
+              Column(
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.symmetric(
+                          vertical: 10,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            Text('Date'),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  Search(),
+                ],
+              ),
+             ]
+          ),
+        ),
+      );
   }
 }
