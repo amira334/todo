@@ -3,9 +3,11 @@ import '../model/todo.dart';
 import '../widgets/search.dart';
 import '../widgets/todo_item.dart';
 import 'package:intl/intl.dart';
+import '../widgets/button.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
+
   @override
   State<HomeScreen> createState() => _HomeState();
 }
@@ -13,6 +15,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeState extends State<HomeScreen> {
   final todoList = ToDo.todoList();
   final _todoController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,55 +39,53 @@ class _HomeState extends State<HomeScreen> {
             children: [
               Row(
                 children: [
-                  Container(
-                    // margin: const EdgeInsets.symmetric(
-                    //   vertical: 10,
-                    // ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(DateFormat.yMMMMd().format(DateTime.now()),
-                          style: Theme.of(context).textTheme.headline6,
-                        ),
-                      ],
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        DateFormat.yMMMMd().format(DateTime.now()),
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                    ],
                   )
                 ],
               ),
               Container(
-                margin: const EdgeInsets.symmetric(
-                  vertical: 10,
-                ),
-                  child: Search()),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: todoList
-                        .map(
-                          (todo) => ToDoItem(
-                        todo: todo,
-                        onToDoChanged: _handleToDoChange,
-                        onDeleteItem: _handleDeleteItem,
-                      ),
-                    )
-                        .toList(),
+                  margin: const EdgeInsets.symmetric(
+                    vertical: 10,
                   ),
-                ),
-
+                  child: Search()
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Align(
-                  alignment: Alignment.bottomRight,
-                  child: ElevatedButton(
-                      onPressed: () {},
-                      style: const ButtonStyle(
-                          ),
-                      child: const Text('Text Button') ),
-                ),
+              Column(
+                children: [
+                  Text()
+                ],
               )
+
+              // Expanded(
+              //   child: SingleChildScrollView(
+              //     child: Column(
+              //       children: todoList
+              //           .map(
+              //             (todo) => ToDoItem(
+              //           todo: todo,
+              //           onToDoChanged: _handleToDoChange,
+              //           onDeleteItem: _handleDeleteItem,
+              //         ),
+              //       )
+              //           .toList(),
+              //     ),
+              //   ),
+              // ),
+
             ],
           ),
+          Padding(
+            padding: const EdgeInsets.all(15),
+            child: Align(
+              alignment: Alignment.bottomRight,
+              child: Button(label: '+ Add Task', onTap: ()=> null)),
+            )
         ]),
       ),
     );

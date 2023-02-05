@@ -22,7 +22,7 @@ class _SearchState extends State<Search> {
             contentPadding: const EdgeInsets.all(0),
             suffixIcon: Icon(
               Icons.search,
-              color: Theme.of(context).colorScheme.secondary,
+              color: Theme.of(context).colorScheme.tertiary,
               size: 24,
 
             ),

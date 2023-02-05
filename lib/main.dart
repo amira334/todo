@@ -20,7 +20,8 @@ class MyApp extends StatelessWidget {
       theme: theme.copyWith(
         colorScheme: theme.colorScheme.copyWith(
           primary: const Color(0xFFFFFFFF),
-          secondary: Colors.blueGrey,
+          secondary: const Color(0xFFb2dfdb),
+          tertiary: const Color(0xFF82ada9)
         ),
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: Colors.blueGrey,
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
             fontFamily: 'Poppins',
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: Colors.blueGrey,
+            color: Color(0xFF82ada9),
 
           ),
         ),
@@ -40,6 +41,8 @@ class MyApp extends StatelessWidget {
           ),
           bodyText2: const TextStyle(
             color: Colors.black,
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.bold
           ),
           headline6: const TextStyle(
             fontSize: 16,
