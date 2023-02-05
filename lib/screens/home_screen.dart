@@ -4,13 +4,13 @@ import '../widgets/search.dart';
 import '../widgets/todo_item.dart';
 import 'package:intl/intl.dart';
 
-class Home extends StatefulWidget {
-  Home({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  HomeScreen({Key? key}) : super(key: key);
   @override
-  State<Home> createState() => _HomeState();
+  State<HomeScreen> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<HomeScreen> {
   final todoList = ToDo.todoList();
   final _todoController = TextEditingController();
   @override
@@ -70,70 +70,21 @@ class _HomeState extends State<Home> {
                         .toList(),
                   ),
                 ),
+
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: ElevatedButton(
+                      onPressed: () {},
+                      style: const ButtonStyle(
+                          ),
+                      child: const Text('Text Button') ),
+                ),
               )
             ],
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.only(
-                      bottom: 20,
-                      right: 20,
-                      left: 20,
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 5,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.grey,
-                          spreadRadius: 0.0,
-                          blurRadius: 10,
-                          offset: const Offset(0.0, 0.0),
-                        )
-                      ],
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: TextField(
-                      controller: _todoController,
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'Add ToDo',
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(
-                    bottom: 20,
-                    right: 20,
-                  ),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      _addTodoItem(_todoController.text);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      minimumSize: const Size(60, 60),
-                      elevation: 10,
-                    ),
-                    child: const Text(
-                      '+',
-                      style: TextStyle(
-                        fontSize: 40,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          )
         ]),
       ),
     );
