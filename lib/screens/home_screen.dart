@@ -44,7 +44,7 @@ class _HomeState extends State<HomeScreen> {
                     children: [
                       Text(
                         DateFormat.yMMMMd().format(DateTime.now()),
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Theme.of(context).textTheme.bodyText2,
                       ),
                     ],
                   )
@@ -56,29 +56,13 @@ class _HomeState extends State<HomeScreen> {
                   ),
                   child: Search()
               ),
-              Column(
-                children: [
-                  Text()
-                ],
-              )
-
-              // Expanded(
-              //   child: SingleChildScrollView(
-              //     child: Column(
-              //       children: todoList
-              //           .map(
-              //             (todo) => ToDoItem(
-              //           todo: todo,
-              //           onToDoChanged: _handleToDoChange,
-              //           onDeleteItem: _handleDeleteItem,
-              //         ),
-              //       )
-              //           .toList(),
-              //     ),
-              //   ),
-              // ),
-
-            ],
+               Row(
+                 children: [
+                   Text('My Task',
+                     style: Theme.of(context).textTheme.headline6,
+                   )
+                 ],
+               )],
           ),
           Padding(
             padding: const EdgeInsets.all(15),
