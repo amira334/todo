@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       title: 'ToDo',
       theme: theme.copyWith(
         colorScheme: theme.colorScheme.copyWith(
-          primary: const Color(0xFFF6F8FA),
+          primary: const Color(0xFFFFFFFF),
           secondary: Colors.blueGrey,
         ),
         textSelectionTheme: const TextSelectionThemeData(
@@ -27,9 +27,9 @@ class MyApp extends StatelessWidget {
         ),
         appBarTheme: const AppBarTheme(
           titleTextStyle: TextStyle(
-            fontFamily: 'Raleway',
+            fontFamily: 'Poppins',
             fontSize: 20,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w600,
             color: Colors.blueGrey,
 
           ),
@@ -42,8 +42,8 @@ class MyApp extends StatelessWidget {
             color: Colors.black,
           ),
           headline6: const TextStyle(
-            fontSize: 18,
-            fontFamily: 'RobotoCondensed',
+            fontSize: 16,
+            fontFamily: 'Poppins',
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),

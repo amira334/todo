@@ -31,6 +31,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  intl: ^0.18.0
 
 
   # The following adds the Cupertino Icons fonts to your application.
@@ -76,12 +77,12 @@ flutter:
   # list giving the asset and other descriptors for the fonts. For
   # example:
   fonts:
-    - family: Raleway
+    - family: Poppins
       fonts:
-        - asset: assets/fonts/Raleway-Regular.ttf
-        - asset: assets/fonts/Raleway-Bold.ttf
-          weight: 700
-        - asset: assets/fonts/Raleway-Black.ttf
+        - asset: assets/fonts/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins-Bold.ttf
+          weight: 600
+        - asset: assets/fonts/Poppins-Black.ttf
           weight: 900
     - family: RobotoCondensed
       fonts:
