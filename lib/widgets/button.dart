@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Button extends StatelessWidget {
   final String label;
-  final Function onTap;
+  final onTap;
 
   const Button({Key? key, required this.label, required this.onTap})
       : super(key: key);
@@ -10,7 +10,7 @@ class Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onTap,
+      onTap: onTap,
       child: Container(
         width: 110,
         height: 45,

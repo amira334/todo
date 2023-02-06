@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo/dbprovider.dart';
+import 'package:todo/widgets/button.dart';
 import '../model/todo.dart';
 import '../widgets/search.dart';
 import '../widgets/todo_item.dart';
@@ -106,15 +107,18 @@ class _HomeState extends State<HomeScreen> {
                         )
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(15),
+          const Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: 15,
+            ),
             child: Align(
-                alignment: Alignment.bottomRight,
-                child: ElevatedButton(
-                  onPressed: _addTodoItem,
-                  child: const Text('add'),
-                )),
-          )
+              alignment: Alignment.bottomRight,
+              child: Button(
+                label: '+ Add Task',
+                onTap: null,
+              ),
+            ),
+          ),
         ]),
       ),
     );
