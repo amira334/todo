@@ -37,24 +37,32 @@ class MyApp extends StatelessWidget {
         ),
         textTheme: theme.textTheme.copyWith(
           bodyText1: const TextStyle(
-            color: Colors.black,
+            fontFamily: 'Poppins',
+            fontSize: 14,
+            color: Colors.black12,
           ),
           bodyText2: const TextStyle(
             color: Colors.black,
               fontFamily: 'Poppins',
               fontWeight: FontWeight.bold
           ),
+
           headline6: const TextStyle(
             fontSize: 16,
             fontFamily: 'Poppins',
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
+          bodySmall: const TextStyle(
+            fontSize: 12,
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+        )
         ),
     ),
         home: HomeScreen(),
     );
   }
 }
-
 
