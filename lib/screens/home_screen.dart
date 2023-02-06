@@ -15,11 +15,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeState extends State<HomeScreen> {
   late List<ToDo> todos;
   bool isLoading = false;
+  List<ToDo> _foundTodos = [];
 
   @override
   void initState() {
     super.initState();
     refreshToDos();
+    //_foundTodos = todos;
   }
 
   @override
@@ -31,6 +33,7 @@ class _HomeState extends State<HomeScreen> {
   Future refreshToDos() async {
     setState(() => isLoading = true);
     todos = await TodosDatabase.instance.readAllTodos();
+    _foundTodos = todos;
     setState(() => isLoading = false);
   }
 
@@ -72,7 +75,9 @@ class _HomeState extends State<HomeScreen> {
                   margin: const EdgeInsets.symmetric(
                     vertical: 10,
                   ),
-                  child: Search()),
+                  child: Search(
+                    runFilter: runFilter,
+                  )),
               Row(
                 children: [
                   Text(
@@ -89,10 +94,10 @@ class _HomeState extends State<HomeScreen> {
                       ? const Center(child: Text('No tasks'))
                       : Expanded(
                           child: ListView.builder(
-                            itemCount: todos.length,
+                            itemCount: _foundTodos.length,
                             itemBuilder: (context, index) {
                               return ToDoItem(
-                                todo: todos[index],
+                                todo: _foundTodos[index],
                                 onToDoChanged: _handleToDoChange,
                                 onDeleteItem: _handleDeleteItem,
                               );
@@ -113,6 +118,25 @@ class _HomeState extends State<HomeScreen> {
         ]),
       ),
     );
+  }
+
+  void runFilter(String enteredText) {
+    List<ToDo> results = [];
+    if (enteredText.isEmpty) {
+      results = todos;
+    } else {
+      results = todos
+          .where(
+            (element) => element.todoText
+                .toLowerCase()
+                .contains(enteredText.toLowerCase()),
+          )
+          .toList();
+    }
+
+    setState(() {
+      _foundTodos = results;
+    });
   }
 
   void _handleToDoChange(ToDo todo) async {
