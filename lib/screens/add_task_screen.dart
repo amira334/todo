@@ -18,9 +18,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         elevation: 0,
         backgroundColor: Theme.of(context).colorScheme.primary,
         leading: GestureDetector(
-          onTap: () {
-            Get.back();
-          },
+          onTap: () => Get.back(),
           child: Icon(
             Icons.arrow_back,
             color: Theme.of(context).colorScheme.tertiary,
@@ -35,8 +33,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Add Task',
-                style: Theme.of(context).textTheme.headline6,),
+              Text(
+                'Add Task',
+                style: Theme.of(context).textTheme.headline6,
+              ),
               const InputField(title: 'Title', hint: 'title'),
             ],
           ),
