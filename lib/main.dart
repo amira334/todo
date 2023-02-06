@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
           bodyLarge: const TextStyle(
             color: Colors.black,
           ),
-          bodyMedium: const TextStyle(
+          bodyText2: const TextStyle(
               color: Colors.black,
               fontFamily: 'Poppins',
               fontWeight: FontWeight.bold),

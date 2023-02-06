@@ -5,6 +5,10 @@ import '../model/todo.dart';
 import '../widgets/search.dart';
 import '../widgets/todo_item.dart';
 import 'package:intl/intl.dart';
+import '../widgets/button.dart';
+import 'add_task_screen.dart';
+import 'package:date_picker_timeline/date_picker_timeline.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -68,6 +72,10 @@ class _HomeState extends State<HomeScreen> {
                         DateFormat.yMMMMd().format(DateTime.now()),
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
+                      Text(
+                        'Today',
+                        style: Theme.of(context).textTheme.headline6,
+                      )
                     ],
                   )
                 ],
@@ -112,13 +120,10 @@ class _HomeState extends State<HomeScreen> {
               vertical: 15,
             ),
             child: Align(
-              alignment: Alignment.bottomRight,
-              child: Button(
-                label: '+ Add Task',
-                onTap: null,
-              ),
-            ),
-          ),
+                alignment: Alignment.bottomRight,
+                child: Button(
+                    label: '+ Add Task', onTap: () => Get.to(AddTaskScreen()))),
+          )
         ]),
       ),
     );
