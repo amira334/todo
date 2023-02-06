@@ -19,8 +19,8 @@ class MyApp extends StatelessWidget {
       theme: theme.copyWith(
         colorScheme: theme.colorScheme.copyWith(
           primary: const Color(0xFFFFFFFF),
-          secondary: const Color(0xFFb2dfdb),
-          tertiary: const Color(0xFF82ada9),
+          secondary: const Color(0xFFB2DFDB),
+          tertiary: const Color(0xFF82ADA9),
         ),
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: Colors.blueGrey,
@@ -30,18 +30,18 @@ class MyApp extends StatelessWidget {
             fontFamily: 'Poppins',
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF82ada9),
+            color: Color(0xFF82ADA9),
           ),
         ),
         textTheme: theme.textTheme.copyWith(
-          bodyText1: const TextStyle(
+          bodyLarge: const TextStyle(
             color: Colors.black,
           ),
-          bodyText2: const TextStyle(
+          bodyMedium: const TextStyle(
               color: Colors.black,
               fontFamily: 'Poppins',
               fontWeight: FontWeight.bold),
-          headline6: const TextStyle(
+          titleLarge: const TextStyle(
             fontSize: 16,
             fontFamily: 'Poppins',
             fontWeight: FontWeight.bold,

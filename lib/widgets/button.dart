@@ -19,10 +19,7 @@ class Button extends StatelessWidget {
           color: Theme.of(context).colorScheme.secondary,
         ),
         child: Center(
-          child: Text(
-            label,
-            style: Theme.of(context).textTheme.bodyText2
-          ),
+          child: Text(label, style: Theme.of(context).textTheme.bodyMedium),
         ),
       ),
     );

@@ -65,7 +65,7 @@ class _HomeState extends State<HomeScreen> {
                     children: [
                       Text(
                         DateFormat.yMMMMd().format(DateTime.now()),
-                        style: Theme.of(context).textTheme.bodyText2,
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ],
                   )
@@ -82,7 +82,7 @@ class _HomeState extends State<HomeScreen> {
                 children: [
                   Text(
                     'My Task',
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.titleLarge,
                   )
                 ],
               ),
