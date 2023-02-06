@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
           bodyLarge: const TextStyle(
             color: Colors.black,
           ),
-          bodyText2: const TextStyle(
+          bodyMedium: const TextStyle(
               color: Colors.black,
               fontFamily: 'Poppins',
               fontWeight: FontWeight.bold),
@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: HomeScreen(),
+      home: const HomeScreen(),
     );
   }
 }
