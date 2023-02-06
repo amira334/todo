@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:todo/screens/add_task_screen.dart';
 import './screens/home_screen.dart';
 
 void main() {
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
         colorScheme: theme.colorScheme.copyWith(
           primary: const Color(0xFFFFFFFF),
           secondary: const Color(0xFFb2dfdb),
-          tertiary: const Color(0xFF82ada9)
+          tertiary: const Color(0xFF82ada9),
+
         ),
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: Colors.blueGrey,
@@ -39,7 +41,7 @@ class MyApp extends StatelessWidget {
           bodyText1: const TextStyle(
             fontFamily: 'Poppins',
             fontSize: 14,
-            color: Colors.black12,
+            color: Colors.black54,
           ),
           bodyText2: const TextStyle(
             color: Colors.black,
@@ -48,20 +50,21 @@ class MyApp extends StatelessWidget {
           ),
 
           headline6: const TextStyle(
-            fontSize: 18,
+            fontSize: 20,
             fontFamily: 'Poppins',
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF1d2c2a),
           ),
-          bodySmall: const TextStyle(
-            fontSize: 12,
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-        )
+        //   bodySmall: const TextStyle(
+        //     fontSize: 12,
+        //     fontFamily: 'Poppins',
+        //     fontWeight: FontWeight.bold,
+        //     color: Colors.black,
+        // )
         ),
     ),
-        home: HomeScreen(),
+        home: AddTaskScreen(),
+        //home: HomeScreen(),
     );
   }
 }

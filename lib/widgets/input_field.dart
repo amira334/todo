@@ -18,56 +18,64 @@ class InputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.symmetric(
+        vertical: 5
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Title',
-            style: Theme.of(context).textTheme.bodyText1,
+            title,
+            style: Theme.of(context).textTheme.bodyText2,
           ),
           Container(
-            height: 50,
-            margin: EdgeInsets.only(top: 8),
+            height: 42,
+            margin: const EdgeInsets.only(top: 8),
+            padding: EdgeInsets.only(left:15),
             decoration: BoxDecoration(
               border: Border.all(
-                color: Theme.of(context).colorScheme.tertiary,
+                color: const Color(0xFFd0e0de),
                 width: 1,
               ),
+              color: const Color(0xFFF5F5F5),
               borderRadius: BorderRadius.circular(15),
             ),
             child: Row(
               children: [
                 Expanded(
                   child: TextFormField(
+                    readOnly: widget==null?false:true,
                       autofocus: false,
                       cursorColor:
                           Theme.of(context).textSelectionTheme.cursorColor,
                       controller: controller,
-                      style: Theme.of(context).textTheme.bodyText1,
                     decoration: InputDecoration(
                       hintText: hint,
                       hintStyle: const TextStyle(
-                      color: Colors.black12,
-                      //color: Theme.of(context).colorScheme.secondary,
+                      color: Colors.black26,
                       fontFamily: 'Poppins',
                       fontSize: 14,
-                      fontWeight: FontWeight.w600,
+                      //fontWeight: FontWeight.w600,
                     ),
                       focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.primary,
+                        borderSide: const BorderSide(
+                          color: Color(0xFF82ada9),
                           width: 0,
                         ),
+                        borderRadius: BorderRadius.circular(15),
+
                       ),
                       enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.primary,
+                        borderSide: const BorderSide(
+                          color: Colors.white,
                           width: 0
-                        )
+                        ),
+                        borderRadius: BorderRadius.circular(15),
                       )
                     ),
                   ),
-                )
+                ),
+                widget==null?Container():Container(child: widget,)
               ],
             ),
           )
