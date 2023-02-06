@@ -3,17 +3,16 @@ import 'package:flutter/services.dart';
 import './screens/home_screen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = ThemeData();
     SystemChrome.setSystemUIOverlayStyle(
-         const SystemUiOverlayStyle(statusBarColor: Colors.transparent)
-    );
+        const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'ToDo',
@@ -21,7 +20,7 @@ class MyApp extends StatelessWidget {
         colorScheme: theme.colorScheme.copyWith(
           primary: const Color(0xFFFFFFFF),
           secondary: const Color(0xFFb2dfdb),
-          tertiary: const Color(0xFF82ada9)
+          tertiary: const Color(0xFF82ada9),
         ),
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: Colors.blueGrey,
@@ -32,7 +31,6 @@ class MyApp extends StatelessWidget {
             fontSize: 20,
             fontWeight: FontWeight.w600,
             color: Color(0xFF82ada9),
-
           ),
         ),
         textTheme: theme.textTheme.copyWith(
@@ -40,10 +38,9 @@ class MyApp extends StatelessWidget {
             color: Colors.black,
           ),
           bodyText2: const TextStyle(
-            color: Colors.black,
+              color: Colors.black,
               fontFamily: 'Poppins',
-              fontWeight: FontWeight.bold
-          ),
+              fontWeight: FontWeight.bold),
           headline6: const TextStyle(
             fontSize: 16,
             fontFamily: 'Poppins',
@@ -51,10 +48,8 @@ class MyApp extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-    ),
-        home: HomeScreen(),
+      ),
+      home: HomeScreen(),
     );
   }
 }
-
-

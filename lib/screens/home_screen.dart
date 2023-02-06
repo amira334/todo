@@ -1,20 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:todo/dbprovider.dart';
 import '../model/todo.dart';
 import '../widgets/search.dart';
 import '../widgets/todo_item.dart';
 import 'package:intl/intl.dart';
-import '../widgets/button.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeState();
 }
 
 class _HomeState extends State<HomeScreen> {
-  final todoList = ToDo.todoList();
-  final _todoController = TextEditingController();
+  late List<ToDo> todos;
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    refreshToDos();
+  }
+
+  @override
+  void dispose() {
+    TodosDatabase.instance.close();
+    super.dispose();
+  }
+
+  Future refreshToDos() async {
+    setState(() => isLoading = true);
+    todos = await TodosDatabase.instance.readAllTodos();
+    setState(() => isLoading = false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,46 +72,68 @@ class _HomeState extends State<HomeScreen> {
                   margin: const EdgeInsets.symmetric(
                     vertical: 10,
                   ),
-                  child: Search()
+                  child: Search()),
+              Row(
+                children: [
+                  Text(
+                    'My Task',
+                    style: Theme.of(context).textTheme.headline6,
+                  )
+                ],
               ),
-               Row(
-                 children: [
-                   Text('My Task',
-                     style: Theme.of(context).textTheme.headline6,
-                   )
-                 ],
-               )],
+              isLoading
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : todos.isEmpty
+                      ? const Center(child: Text('No tasks'))
+                      : Expanded(
+                          child: ListView.builder(
+                            itemCount: todos.length,
+                            itemBuilder: (context, index) {
+                              return ToDoItem(
+                                todo: todos[index],
+                                onToDoChanged: _handleToDoChange,
+                                onDeleteItem: _handleDeleteItem,
+                              );
+                            },
+                          ),
+                        )
+            ],
           ),
           Padding(
             padding: const EdgeInsets.all(15),
             child: Align(
-              alignment: Alignment.bottomRight,
-              child: Button(label: '+ Add Task', onTap: ()=> null)),
-            )
+                alignment: Alignment.bottomRight,
+                child: ElevatedButton(
+                  onPressed: _addTodoItem,
+                  child: const Text('add'),
+                )),
+          )
         ]),
       ),
     );
   }
 
-  void _handleToDoChange(ToDo todo) {
-    setState(() {
-      todo.isDone = !todo.isDone;
-    });
+  void _handleToDoChange(ToDo todo) async {
+    final obj = todo.copy(
+      isDone: todo.isDone == 0 ? 1 : 0,
+    );
+    await TodosDatabase.instance.update(obj);
+    refreshToDos();
   }
 
-  void _handleDeleteItem(ToDo todo) {
-    setState(() {
-      todoList.remove(todo);
-    });
+  void _handleDeleteItem(todoId) async {
+    await TodosDatabase.instance.delete(todoId);
+    refreshToDos();
   }
 
-  void _addTodoItem(String toDo) {
-    setState(() {
-      todoList.add(ToDo(
-        id: DateTime.now().microsecondsSinceEpoch.toString(),
-        todoText: toDo,
-      ));
-    });
-    _todoController.clear();
+  void _addTodoItem() async {
+    const todo = ToDo(
+      todoText: 'Test task',
+    );
+
+    await TodosDatabase.instance.create(todo);
+    refreshToDos();
   }
 }
