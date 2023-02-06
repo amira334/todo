@@ -32,6 +32,7 @@ dependencies:
   flutter:
     sdk: flutter
   intl: ^0.18.0
+  syncfusion_flutter_datepicker: ^20.4.48
 
 
   # The following adds the Cupertino Icons fonts to your application.
@@ -81,7 +82,7 @@ flutter:
       fonts:
         - asset: assets/fonts/Poppins-Regular.ttf
         - asset: assets/fonts/Poppins-Bold.ttf
-          weight: 600
+          weight: 500
         - asset: assets/fonts/Poppins-Black.ttf
           weight: 900
     - family: RobotoCondensed

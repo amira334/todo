@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.bold
           ),
           headline6: const TextStyle(
-            fontSize: 16,
+            fontSize: 18,
             fontFamily: 'Poppins',
             fontWeight: FontWeight.bold,
             color: Colors.black,

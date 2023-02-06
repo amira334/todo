@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../model/todo.dart';
 import '../widgets/search.dart';
-import '../widgets/todo_item.dart';
 import 'package:intl/intl.dart';
 import '../widgets/button.dart';
 
@@ -37,19 +36,7 @@ class _HomeState extends State<HomeScreen> {
         child: Stack(children: [
           Column(
             children: [
-              Row(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        DateFormat.yMMMMd().format(DateTime.now()),
-                        style: Theme.of(context).textTheme.bodyText2,
-                      ),
-                    ],
-                  )
-                ],
-              ),
+              _addDate(),
               Container(
                   margin: const EdgeInsets.symmetric(
                     vertical: 10,
@@ -60,18 +47,44 @@ class _HomeState extends State<HomeScreen> {
                  children: [
                    Text('My Task',
                      style: Theme.of(context).textTheme.headline6,
-                   )
+                   ),
+                   Container(
+                       margin: const EdgeInsets.symmetric(
+                         vertical: 10,
+                       ),
+                       child: Search()
+                   ),
                  ],
                )],
           ),
           Padding(
-            padding: const EdgeInsets.all(15),
+            padding: const EdgeInsets.symmetric(
+              vertical: 15,
+            ),
             child: Align(
               alignment: Alignment.bottomRight,
               child: Button(label: '+ Add Task', onTap: ()=> null)),
             )
         ]),
       ),
+    );
+  }
+
+  _addDate(){
+    return Row(
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              DateFormat.yMMMMd().format(DateTime.now()),
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
+            Text('Today',
+              style: Theme.of(context).textTheme.headline6,),
+          ],
+        ),
+      ],
     );
   }
 
