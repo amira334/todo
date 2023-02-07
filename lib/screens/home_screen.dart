@@ -178,13 +178,4 @@ class _HomeState extends State<HomeScreen> {
     await TodosDatabase.instance.delete(todoId);
     refreshToDos();
   }
-
-  void _addTodoItem() async {
-    const todo = ToDo(
-      todoText: 'Test task',
-    );
-
-    await TodosDatabase.instance.create(todo);
-    refreshToDos();
-  }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../dbprovider.dart';
+import '../model/todo.dart';
 import '../widgets/input_field.dart';
 import 'package:intl/intl.dart';
 import '../widgets/button.dart';
@@ -16,8 +18,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   final TextEditingController _noteController = TextEditingController();
   DateTime _selectedDate = DateTime.now();
   String _startTime = DateFormat('hh:mm a').format(DateTime.now()).toString();
-  String _endTime = '9.00 PM';
-  //String _endTime = DateFormat('hh:mm a').format(DateTime.now()).toString();
+  // add 10 minutes to the current time
+  String _endTime = DateFormat('hh:mm a')
+      .format(DateTime.now().add(const Duration(minutes: 10)))
+      .toString();
 
   @override
   Widget build(BuildContext context) {
@@ -116,10 +120,20 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     );
   }
 
-  _validatedData() {
+  _validatedData() async {
     if (_titleController.text.isNotEmpty && _noteController.text.isNotEmpty) {
+      ToDo todo = ToDo(
+        todoText: _titleController.text,
+        note: _noteController.text,
+        date: _selectedDate,
+        startTime: _startTime,
+        endTime: _endTime,
+      );
+
+      await TodosDatabase.instance.create(todo);
+
       Get.back();
-      Get.snackbar('Required', 'Successfully added task',
+      Get.snackbar('Success', 'Successfully added task',
           snackPosition: SnackPosition.TOP,
           icon: const Icon(Icons.check_circle_outline_outlined),
           backgroundColor: const Color(0xff9BDDFF),

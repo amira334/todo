@@ -25,13 +25,20 @@ class TodosDatabase {
     const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     const todoTextType = 'TEXT NOT NULL';
     const isDoneType = 'BOOLEAN NOT NULL';
+    const noteType = 'TEXT NOT NULL';
+    const dateType = 'TEXT NOT NULL';
+    const startTimeType = 'TEXT NOT NULL';
+    const endTimeType = 'TEXT NOT NULL';
 
-    await db.execute(
-        '''
+    await db.execute('''
       CREATE TABLE $tableTodos (
         ${ToDoFields.id} $idType,
         ${ToDoFields.todoText} $todoTextType,
         ${ToDoFields.isDone} $isDoneType CHECK  (${ToDoFields.isDone} IN (0, 1))
+        ${ToDoFields.note} $noteType,
+        ${ToDoFields.date} $dateType,
+        ${ToDoFields.startTime} $startTimeType,
+        ${ToDoFields.endTime} $endTimeType
       )''');
   }
 

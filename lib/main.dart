@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:todo/screens/add_task_screen.dart';
 import 'package:get/get.dart';
 import './screens/home_screen.dart';
 
