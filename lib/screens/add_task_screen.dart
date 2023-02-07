@@ -12,6 +12,9 @@ class AddTaskScreen extends StatefulWidget {
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
   DateTime _selectedDate = DateTime.now();
+  String _startTime = DateFormat('hh:mm a').format(DateTime.now()).toString();
+  String _endTime = '9.00 PM';
+  //String _endTime = DateFormat('hh:mm a').format(DateTime.now()).toString();
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +78,35 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       .tertiary,
                 ),
               ),
+              Row(
+                children: [
+                  Expanded(child: InputField(
+                    title: 'Start Time',
+                    hint: _startTime,
+                    widget: IconButton(
+                      onPressed: () {
+                        _getTime(isStartTime: true);
+                      },
+                        icon: Icon(Icons.timer_outlined),
+                      color: Color(0xFF5d8e8a),
+                    )
+                  )),
+                  SizedBox(
+                    width: 12,
+                  ),
+                  Expanded(child: InputField(
+                      title: 'End Time',
+                      hint: _endTime,
+                      widget: IconButton(
+                        onPressed: () {
+                          _getTime(isStartTime: false);
+                        },
+                        icon: Icon(Icons.timer_outlined),
+                        color: Color(0xFF5d8e8a),
+                      )
+                  )),
+                ],
+              )
             ],
           ),
         ),
@@ -88,8 +120,88 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       initialDate: DateTime.now(),
       firstDate: DateTime(2015),
       lastDate: DateTime(2030),
-
+        builder: (BuildContext context, Widget ?child) {
+          return Theme(
+            data: ThemeData(
+              primarySwatch: Colors.blueGrey,
+              splashColor: Colors.black,
+              textTheme: const TextTheme(
+                subtitle1: TextStyle(color: Colors.black),
+                button: TextStyle(color: Colors.black),
+              ),
+              colorScheme: const ColorScheme.light(
+                  primary: Color(0xff649893),
+                  onSecondary: Colors.black,
+                  onPrimary: Colors.white,
+                  surface: Colors.black,
+                  onSurface: Colors.black87,
+                  secondary: Colors.black),
+              dialogBackgroundColor: Colors.white,
+            ),
+            child: child ??Text(""),
+          );
+        }
     );
+    if(_pickerDate!=null){
+      setState(() {
+        _selectedDate = _pickerDate;
+      });
+    }
+    else {
+     return;
+    }
+  }
+  
+  _getTime({required bool isStartTime}) async {
+    _showTimePicker();
+    var pickedTime = await _showTimePicker();
+    String _formatedTime = pickedTime.format(context);
+    if(pickedTime == null){
+      return;
+    }
+    else if(isStartTime == true){
+      setState(() {
+        _startTime=_formatedTime;
+      });
+    }
+    else if(isStartTime == false){
+      setState(() {
+        _endTime = _formatedTime;
+      });
+    }
+
+  }
+
+  _showTimePicker() {
+   return showTimePicker(
+        context: context,
+        initialTime: TimeOfDay(
+            hour: int.parse(_startTime.split(':')[0]), 
+            minute: int.parse(_startTime.split(':')[1].split(' ')[0]),
+        ),
+       builder: (BuildContext context, Widget ?child) {
+         return Theme(
+           data: ThemeData(
+             primarySwatch: Colors.blueGrey,
+             splashColor: Colors.black,
+             textTheme: const TextTheme(
+               subtitle1: TextStyle(color: Colors.black),
+               button: TextStyle(color: Colors.black),
+             ),
+             colorScheme: const ColorScheme.light(
+                 primary: Color(0xff649893),
+                 onSecondary: Colors.black,
+                 onPrimary: Colors.white,
+                 surface: Colors.white,
+                 onSurface: Colors.black,
+                 secondary: Colors.black),
+             dialogBackgroundColor: Colors.white,
+           ),
+           child: child ??Text(""),
+         );
+       }
+
+   );
   }
 
 }

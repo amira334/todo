@@ -59,7 +59,7 @@ class InputField extends StatelessWidget {
                     ),
                       focusedBorder: UnderlineInputBorder(
                         borderSide: const BorderSide(
-                          color: Color(0xFF82ada9),
+                          color: Color(0xFF5d8e8a),
                           width: 0,
                         ),
                         borderRadius: BorderRadius.circular(15),
