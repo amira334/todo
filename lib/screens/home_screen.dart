@@ -1,3 +1,4 @@
+import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:todo/dbprovider.dart';
 import '../model/todo.dart';
@@ -46,14 +47,9 @@ class _HomeState extends State<HomeScreen> {
       backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
-        //backgroundColor: Colors.transparent,
         elevation: 0,
         title: const Text('ToDo'),
       ),
-      // floatingActionButton: const FloatingActionButton(
-      //   onPressed: null,
-      //   child: Icon(Icons.add),
-      // ),
       body: Container(
         padding: const EdgeInsets.symmetric(
           horizontal: 15,
@@ -62,6 +58,7 @@ class _HomeState extends State<HomeScreen> {
           Column(
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,19 +69,39 @@ class _HomeState extends State<HomeScreen> {
                       ),
                       Text(
                         'Today',
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Theme.of(context).textTheme.titleLarge,
                       )
                     ],
+                  ),
+                  IconButton(
+                    onPressed: () => {},
+                    icon: const Icon(
+                      Icons.search,
+                      color: Colors.black,
+                      size: 24,
+                    ),
                   )
                 ],
               ),
+              // Container(
+              //   margin: const EdgeInsets.symmetric(
+              //     vertical: 10,
+              //   ),
+              //   child: Search(
+              //     runFilter: runFilter,
+              //   ),
+              // ),
               Container(
-                  margin: const EdgeInsets.symmetric(
-                    vertical: 10,
-                  ),
-                  child: Search(
-                    runFilter: runFilter,
-                  )),
+                margin: EdgeInsets.symmetric(vertical: 10),
+                child: DatePicker(
+                  DateTime.now(),
+                  height: 100,
+                  width: 80,
+                  initialSelectedDate: DateTime.now(),
+                  selectionColor: Theme.of(context).colorScheme.secondary,
+                  selectedTextColor: Colors.black,
+                ),
+              ),
               Row(
                 children: [
                   Text(
