@@ -2,7 +2,7 @@ import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:todo/dbprovider.dart';
 import '../model/todo.dart';
-import '../widgets/search.dart';
+//import '../widgets/search.dart';
 import '../widgets/todo_item.dart';
 import 'package:intl/intl.dart';
 import '../widgets/button.dart';
