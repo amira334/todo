@@ -1,29 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:todo/screens/add_task_screen.dart';
+import 'package:get/get.dart';
 import './screens/home_screen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = ThemeData();
     SystemChrome.setSystemUIOverlayStyle(
-         const SystemUiOverlayStyle(statusBarColor: Colors.transparent)
-    );
-    return MaterialApp(
+        const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'ToDo',
       theme: theme.copyWith(
         colorScheme: theme.colorScheme.copyWith(
           primary: const Color(0xFFFFFFFF),
-          secondary: const Color(0xFFb2dfdb),
-          tertiary: const Color(0xFF82ada9),
-
+          secondary: const Color(0xFFB2DFDB),
+          tertiary: const Color(0xFF82ADA9),
         ),
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: Colors.blueGrey,
@@ -33,39 +31,28 @@ class MyApp extends StatelessWidget {
             fontFamily: 'Poppins',
             fontSize: 20,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF82ada9),
-
+            color: Color(0xFF82ADA9),
           ),
         ),
         textTheme: theme.textTheme.copyWith(
-          bodyText1: const TextStyle(
+          bodyLarge: const TextStyle(
             fontFamily: 'Poppins',
             fontSize: 14,
             color: Colors.black54,
           ),
-          bodyText2: const TextStyle(
-            color: Colors.black,
+          bodyMedium: const TextStyle(
+              color: Colors.black,
               fontFamily: 'Poppins',
-              fontWeight: FontWeight.bold
-          ),
-
-          headline6: const TextStyle(
+              fontWeight: FontWeight.bold),
+          titleLarge: const TextStyle(
             fontSize: 20,
             fontFamily: 'Poppins',
             fontWeight: FontWeight.w600,
             color: Color(0xFF1d2c2a),
           ),
-        //   bodySmall: const TextStyle(
-        //     fontSize: 12,
-        //     fontFamily: 'Poppins',
-        //     fontWeight: FontWeight.bold,
-        //     color: Colors.black,
-        // )
         ),
-    ),
-        home: AddTaskScreen(),
-        //home: HomeScreen(),
+      ),
+      home: const HomeScreen(),
     );
   }
 }
-

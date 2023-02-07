@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import '../model/todo.dart';
 
 class ToDoItem extends StatelessWidget {
@@ -14,58 +15,66 @@ class ToDoItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dismissible(
-      key: Key(todo.id!),
-      background: Container(
-        padding: EdgeInsets.only(left: 20),
-        margin: EdgeInsets.symmetric(vertical: 5),
-        alignment: Alignment.centerLeft,
-        height: 35,
-        width: 35,
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.secondary,
-          borderRadius: BorderRadius.circular(5),
+    return Container(
+      margin: const EdgeInsets.only(bottom: 20),
+      child: Slidable(
+        key: ValueKey(todo.id!),
+        endActionPane: ActionPane(
+          motion: const DrawerMotion(),
+          children: [
+            SlidableAction(
+              onPressed: (context) => {},
+              backgroundColor: const Color(0xFFbbdefb),
+              foregroundColor: Colors.black,
+              icon: Icons.edit,
+              label: 'Edit',
+              borderRadius: BorderRadius.circular(20),
+            ),
+            SlidableAction(
+              onPressed: (context) => {
+                onDeleteItem(todo.id),
+              },
+              backgroundColor: const Color(0xFFffcdd2),
+              foregroundColor: Colors.black,
+              icon: Icons.delete,
+              label: 'Delete',
+              borderRadius: BorderRadius.circular(20),
+            ),
+          ],
         ),
-        child: Icon(
-          Icons.edit,
-          color: Colors.white,
-        ),
-      ),
-      secondaryBackground: Container(
-        padding: const EdgeInsets.only(right: 20),
-        margin: EdgeInsets.symmetric(vertical: 5),
-        alignment: Alignment.centerRight,
-        height: 35,
-        width: 35,
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.secondary,
-          borderRadius: BorderRadius.circular(5),
-        ),
-        child: const Icon(
-          Icons.delete,
-          color: Colors.white,
-        ),
-      ),
-      onDismissed: (direction) {
-        onDeleteItem(todo);
-      },
-      child: Card(
-        elevation: 0,
-        child: ListTile(
-          onTap: () {
-            onToDoChanged(todo);
-          },
-          contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-          leading: Icon(
-            todo.isDone ? Icons.check_box : Icons.check_box_outline_blank,
-            color: Theme.of(context).colorScheme.secondary,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: const [
+              BoxShadow(
+                color: Color(0xFFF3F3F3),
+                spreadRadius: 3,
+                blurRadius: 3,
+                offset: Offset(-2, 3),
+              ),
+            ],
           ),
-          title: Text(
-            todo.todoText!,
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.black,
-              decoration: todo.isDone ? TextDecoration.lineThrough : null,
+          child: ListTile(
+            onTap: () {
+              onToDoChanged(todo);
+            },
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+            leading: Icon(
+              todo.isDone == 1
+                  ? Icons.check_box
+                  : Icons.check_box_outline_blank,
+              color: Theme.of(context).colorScheme.secondary,
+            ),
+            title: Text(
+              todo.todoText,
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.black,
+                decoration:
+                    todo.isDone == 1 ? TextDecoration.lineThrough : null,
+              ),
             ),
           ),
         ),
