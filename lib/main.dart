@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:todo/screens/add_task_screen.dart';
 import 'package:get/get.dart';
 import './screens/home_screen.dart';
 
@@ -36,17 +37,19 @@ class MyApp extends StatelessWidget {
         ),
         textTheme: theme.textTheme.copyWith(
           bodyLarge: const TextStyle(
-            color: Colors.black,
+            fontFamily: 'Poppins',
+            fontSize: 14,
+            color: Colors.black54,
           ),
           bodyMedium: const TextStyle(
               color: Colors.black,
               fontFamily: 'Poppins',
               fontWeight: FontWeight.bold),
           titleLarge: const TextStyle(
-            fontSize: 16,
+            fontSize: 20,
             fontFamily: 'Poppins',
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF1d2c2a),
           ),
         ),
       ),
