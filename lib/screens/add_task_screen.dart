@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../widgets/input_field.dart';
 import 'package:intl/intl.dart';
+import '../widgets/button.dart';
 
 class AddTaskScreen extends StatefulWidget {
   const AddTaskScreen({Key? key}) : super(key: key);
@@ -11,6 +12,8 @@ class AddTaskScreen extends StatefulWidget {
 }
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _noteController = TextEditingController();
   DateTime _selectedDate = DateTime.now();
   String _startTime = DateFormat('hh:mm a').format(DateTime.now()).toString();
   String _endTime = '9.00 PM';
@@ -56,14 +59,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     .of(context)
                     .textTheme
                     .headline6,),
-              const InputField(
+              InputField(
                 title: 'Title',
-                hint: 'Title',
+                hint: 'Type here....', controller: _titleController,
               ),
-              const InputField(
-                title: 'Description',
-                hint: 'Description',
-              ),
+
               InputField(
                 title: 'Date',
                 hint: DateFormat.yMd().format(_selectedDate),
@@ -106,12 +106,50 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       )
                   )),
                 ],
-              )
+              ),
+
+              Container(
+                height: 100,
+                child: InputField(
+                  title: 'Description',
+                  hint: 'Type here....', controller: _titleController
+                ),
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(vertical: 10),
+                      child: Button(label: 'Create Task', onTap: () => _validatedData(),)),
+                ],
+              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  _validatedData() {
+     if(_titleController.text.isNotEmpty && _noteController.text.isNotEmpty){
+       Get.back();
+       Get.snackbar('Required', 'Successfully added task',
+           snackPosition: SnackPosition.TOP,
+           icon: const Icon(Icons.check_circle_outline_outlined),
+           backgroundColor: const Color(0xff9BDDFF),
+           colorText: Colors.black
+       );
+     }
+     else if(_titleController.text.isEmpty || _noteController.text.isEmpty){
+       Get.snackbar('Required', 'All fields are required',
+       snackPosition: SnackPosition.TOP,
+       icon: const Icon(Icons.warning_amber_outlined),
+       backgroundColor: const Color(0xffF8BEC3),
+       colorText: Colors.black
+       );
+     }
+
   }
 
   _getDate() async {

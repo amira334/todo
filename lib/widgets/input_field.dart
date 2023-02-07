@@ -19,7 +19,7 @@ class InputField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(
-        vertical: 5
+        vertical: 10
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,7 +29,7 @@ class InputField extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyText2,
           ),
           Container(
-            height: 42,
+            height: 44,
             margin: const EdgeInsets.only(top: 8),
             padding: EdgeInsets.only(left:15),
             decoration: BoxDecoration(
