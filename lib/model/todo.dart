@@ -3,7 +3,15 @@ import 'package:flutter/material.dart';
 const String tableTodos = 'todos';
 
 class ToDoFields {
-  static final List<String> values = [id, todoText, isDone];
+  static final List<String> values = [
+    id,
+    todoText,
+    isDone,
+    note,
+    date,
+    startTime,
+    endTime
+  ];
 
   static const String id = '_id';
   static const String todoText = 'todoText';
@@ -20,7 +28,7 @@ class ToDo {
   final String todoText;
   final int isDone;
   final String note;
-  final DateTime date;
+  final String date;
   final String startTime;
   final String endTime;
 
@@ -39,7 +47,7 @@ class ToDo {
     String? todoText,
     int? isDone,
     String? note,
-    DateTime? date,
+    String? date,
     String? startTime,
     String? endTime,
   }) =>
@@ -58,7 +66,7 @@ class ToDo {
         todoText: json[ToDoFields.todoText] as String,
         note: json[ToDoFields.note] as String,
         isDone: json[ToDoFields.isDone] as int,
-        date: json[ToDoFields.date] as DateTime,
+        date: json[ToDoFields.date] as String,
         startTime: json[ToDoFields.startTime] as String,
         endTime: json[ToDoFields.endTime] as String,
       );

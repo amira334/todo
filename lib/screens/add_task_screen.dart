@@ -100,7 +100,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 child: InputField(
                     title: 'Description',
                     hint: 'Type here....',
-                    controller: _titleController),
+                    controller: _noteController),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -125,7 +125,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       ToDo todo = ToDo(
         todoText: _titleController.text,
         note: _noteController.text,
-        date: _selectedDate,
+        date: _selectedDate.toString(),
         startTime: _startTime,
         endTime: _endTime,
       );
@@ -133,10 +133,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       await TodosDatabase.instance.create(todo);
 
       Get.back();
-      Get.snackbar('Success', 'Successfully added task',
+      Get.snackbar('Success', 'Task created successfully',
           snackPosition: SnackPosition.TOP,
-          icon: const Icon(Icons.check_circle_outline_outlined),
-          backgroundColor: const Color(0xff9BDDFF),
+          icon: const Icon(Icons.check_circle_outline),
+          backgroundColor: const Color(0xffC3F8E3),
           colorText: Colors.black);
     } else if (_titleController.text.isEmpty || _noteController.text.isEmpty) {
       Get.snackbar('Required', 'All fields are required',
@@ -159,8 +159,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               primarySwatch: Colors.blueGrey,
               splashColor: Colors.black,
               textTheme: const TextTheme(
-                subtitle1: TextStyle(color: Colors.black),
-                button: TextStyle(color: Colors.black),
+                titleMedium: TextStyle(color: Colors.black),
+                labelLarge: TextStyle(color: Colors.black),
               ),
               colorScheme: const ColorScheme.light(
                   primary: Color(0xff649893),

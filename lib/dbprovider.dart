@@ -34,7 +34,7 @@ class TodosDatabase {
       CREATE TABLE $tableTodos (
         ${ToDoFields.id} $idType,
         ${ToDoFields.todoText} $todoTextType,
-        ${ToDoFields.isDone} $isDoneType CHECK  (${ToDoFields.isDone} IN (0, 1))
+        ${ToDoFields.isDone} $isDoneType CHECK  (${ToDoFields.isDone} IN (0, 1)),
         ${ToDoFields.note} $noteType,
         ${ToDoFields.date} $dateType,
         ${ToDoFields.startTime} $startTimeType,
