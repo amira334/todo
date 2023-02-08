@@ -59,7 +59,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 title: 'Date',
                 hint: DateFormat.yMd().format(_selectedDate),
                 widget: IconButton(
-                  icon: Icon(Icons.calendar_month_outlined),
+                  icon: const Icon(Icons.calendar_month_outlined),
                   onPressed: () {
                     _getDate();
                   },
@@ -76,8 +76,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                             onPressed: () {
                               _getTime(isStartTime: true);
                             },
-                            icon: Icon(Icons.timer_outlined),
-                            color: Color(0xFF5d8e8a),
+                            icon: const Icon(Icons.timer_outlined),
+                            color: const Color(0xFF5d8e8a),
                           ))),
                   SizedBox(
                     width: 12,
@@ -90,8 +90,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                             onPressed: () {
                               _getTime(isStartTime: false);
                             },
-                            icon: Icon(Icons.timer_outlined),
-                            color: Color(0xFF5d8e8a),
+                            icon: const Icon(Icons.timer_outlined),
+                            color: const Color(0xFF5d8e8a),
                           ))),
                 ],
               ),

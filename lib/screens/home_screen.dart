@@ -2,6 +2,7 @@ import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:todo/dbprovider.dart';
 import '../model/todo.dart';
+
 //import '../widgets/search.dart';
 import '../widgets/todo_item.dart';
 import 'package:intl/intl.dart';
@@ -44,9 +45,15 @@ class _HomeState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Theme
+          .of(context)
+          .colorScheme
+          .primary,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: Theme
+            .of(context)
+            .colorScheme
+            .primary,
         elevation: 0,
         title: const Text('ToDo'),
       ),
@@ -65,11 +72,17 @@ class _HomeState extends State<HomeScreen> {
                     children: [
                       Text(
                         DateFormat.yMMMMd().format(DateTime.now()),
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .bodyMedium,
                       ),
                       Text(
                         'Today',
-                        style: Theme.of(context).textTheme.titleLarge,
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .titleLarge,
                       )
                     ],
                   ),
@@ -92,13 +105,16 @@ class _HomeState extends State<HomeScreen> {
               //   ),
               // ),
               Container(
-                margin: EdgeInsets.symmetric(vertical: 10),
+                margin: const EdgeInsets.symmetric(vertical: 10),
                 child: DatePicker(
                   DateTime.now(),
                   height: 100,
                   width: 80,
                   initialSelectedDate: DateTime.now(),
-                  selectionColor: Theme.of(context).colorScheme.secondary,
+                  selectionColor: Theme
+                      .of(context)
+                      .colorScheme
+                      .secondary,
                   selectedTextColor: Colors.black,
                 ),
               ),
@@ -106,28 +122,65 @@ class _HomeState extends State<HomeScreen> {
                 children: [
                   Text(
                     'My Task',
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .titleLarge,
                   )
                 ],
               ),
               isLoading
                   ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
+                child: CircularProgressIndicator(),
+              )
                   : todos.isEmpty
-                      ? const Center(child: Text('No tasks'))
-                      : Expanded(
-                          child: ListView.builder(
-                            itemCount: _foundTodos.length,
-                            itemBuilder: (context, index) {
-                              return ToDoItem(
-                                todo: _foundTodos[index],
-                                onToDoChanged: _handleToDoChange,
-                                onDeleteItem: _handleDeleteItem,
-                              );
-                            },
-                          ),
-                        )
+              //? const Center(child: Text('No tasks'))
+                  ? Column(
+                children: [
+                  Text(
+                      'No task added yet!',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 20,
+                        color: Theme
+                            .of(context)
+                            .colorScheme
+                            .tertiary,
+                      ),
+                  ),
+                  // const SizedBox(
+                  //   height: 30,
+                  // ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                      vertical: 15,
+                    ),
+                    child: Center(
+                      child: SizedBox(
+                        height :200,
+                        //height: constraints.maxHeight * 0.5,
+                        child: Image.asset(
+                          'assets/images/task.png',
+                          fit: BoxFit.cover,
+                          // alignment: Alignment.center,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+                  : Expanded(
+                child: ListView.builder(
+                  itemCount: _foundTodos.length,
+                  itemBuilder: (context, index) {
+                    return ToDoItem(
+                      todo: _foundTodos[index],
+                      onToDoChanged: _handleToDoChange,
+                      onDeleteItem: _handleDeleteItem,
+                    );
+                  },
+                ),
+              )
             ],
           ),
           Padding(
@@ -154,10 +207,11 @@ class _HomeState extends State<HomeScreen> {
     } else {
       results = todos
           .where(
-            (element) => element.todoText
+            (element) =>
+            element.todoText
                 .toLowerCase()
                 .contains(enteredText.toLowerCase()),
-          )
+      )
           .toList();
     }
 
