@@ -67,14 +67,31 @@ class ToDoItem extends StatelessWidget {
                   : Icons.check_box_outline_blank,
               color: Theme.of(context).colorScheme.secondary,
             ),
-            title: Text(
-              todo.todoText,
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.black,
-                decoration:
-                    todo.isDone == 1 ? TextDecoration.lineThrough : null,
-              ),
+            title: Column(
+              children: [
+                Text(
+                  textAlign: TextAlign.start,
+                  todo.todoText,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.black,
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.bold,
+                    decoration:
+                        todo.isDone == 1 ? TextDecoration.lineThrough : null,
+                  ),
+                ),
+                Row(
+                  children: [
+                    Text(
+                        todo.startTime
+                    ),
+                    Text(
+                      todo.endTime
+                    )
+                  ],
+                )
+              ],
             ),
           ),
         ),
