@@ -59,7 +59,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 title: 'Date',
                 hint: DateFormat.yMd().format(_selectedDate),
                 widget: IconButton(
-                  icon: Icon(Icons.calendar_month_outlined),
+                  icon: const Icon(Icons.calendar_month_outlined),
                   onPressed: () {
                     _getDate();
                   },
@@ -76,10 +76,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                             onPressed: () {
                               _getTime(isStartTime: true);
                             },
-                            icon: Icon(Icons.timer_outlined),
-                            color: Color(0xFF5d8e8a),
+                            icon: const Icon(Icons.timer_outlined),
+                            color: const Color(0xFF5d8e8a),
                           ))),
-                  SizedBox(
+                  const SizedBox(
                     width: 12,
                   ),
                   Expanded(
@@ -90,12 +90,12 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                             onPressed: () {
                               _getTime(isStartTime: false);
                             },
-                            icon: Icon(Icons.timer_outlined),
-                            color: Color(0xFF5d8e8a),
+                            icon: const Icon(Icons.timer_outlined),
+                            color: const Color(0xFF5d8e8a),
                           ))),
                 ],
               ),
-              Container(
+              SizedBox(
                 height: 100,
                 child: InputField(
                     title: 'Description',
@@ -184,7 +184,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   }
 
   _getTime({required bool isStartTime}) async {
-    _showTimePicker();
     var pickedTime = await _showTimePicker();
     String _formatedTime = pickedTime.format(context);
     if (pickedTime == null) {
@@ -213,8 +212,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               primarySwatch: Colors.blueGrey,
               splashColor: Colors.black,
               textTheme: const TextTheme(
-                subtitle1: TextStyle(color: Colors.black),
-                button: TextStyle(color: Colors.black),
+                titleMedium: TextStyle(color: Colors.black),
+                labelLarge: TextStyle(color: Colors.black),
               ),
               colorScheme: const ColorScheme.light(
                   primary: Color(0xff649893),
