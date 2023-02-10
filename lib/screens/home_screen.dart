@@ -59,13 +59,13 @@ class _HomeState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        DateFormat.yMMMMd().format(DateTime.now()),
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      Text(
                         'Today',
                         style: Theme.of(context).textTheme.titleLarge,
-                      )
+                      ),
+                      Text(
+                        DateFormat.yMMMMd().format(DateTime.now()),
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
                     ],
                   ),
                   IconButton(
@@ -89,46 +89,78 @@ class _HomeState extends State<HomeScreen> {
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 10),
                 child: DatePicker(
+                  dateTextStyle: const TextStyle(
+                    fontSize: 20,
+                    color: Color(0xFF5d8e8a),
+                  ),
                   DateTime.now(),
-                  height: 100,
-                  width: 80,
+                  height: 90,
+                  width: 70,
                   initialSelectedDate: DateTime.now(),
                   selectionColor: Theme.of(context).colorScheme.secondary,
                   selectedTextColor: Colors.black,
                 ),
               ),
-              Row(
-                children: [
-                  Text(
-                    'My Task',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  )
-                ],
+              Container(
+                margin: const EdgeInsets.only(bottom: 10),
+                child: Row(
+                  children: [
+                    Text(
+                      'My Task',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    )
+                  ],
+                ),
               ),
-              Expanded(
-                child: Obx(
-                  () {
-                    return ListView.builder(
-                      itemCount: _taskController.taskList.length,
-                      itemBuilder: (_, index) {
-                        return AnimationConfiguration.staggeredList(
-                          position: index,
-                          child: SlideAnimation(
-                            child: FadeInAnimation(
-                              child: ToDoItem(
-                                todo: _taskController.taskList[index],
-                                onToDoChanged: _handleToDoChange,
-                                onDeleteItem: _handleDeleteItem,
-                                onEditItem: _handleEditItem,
-                              ),
+              _taskController.taskList.isEmpty
+                  ? Column(
+                      children: [
+                        Text(
+                          'No task added yet!',
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                            color: Theme.of(context).colorScheme.tertiary,
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(
+                            vertical: 30,
+                          ),
+                          child: SizedBox(
+                            height: 200,
+                            child: Image.asset(
+                              'assets/images/task.png',
+                              fit: BoxFit.cover,
                             ),
                           ),
-                        );
-                      },
-                    );
-                  },
-                ),
-              )
+                        ),
+                      ],
+                    )
+                  : Expanded(
+                      child: Obx(
+                        () {
+                          return ListView.builder(
+                            itemCount: _taskController.taskList.length,
+                            itemBuilder: (_, index) {
+                              return AnimationConfiguration.staggeredList(
+                                position: index,
+                                child: SlideAnimation(
+                                  child: FadeInAnimation(
+                                    child: ToDoItem(
+                                      todo: _taskController.taskList[index],
+                                      onToDoChanged: _handleToDoChange,
+                                      onDeleteItem: _handleDeleteItem,
+                                      onEditItem: _handleEditItem,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    )
             ],
           ),
           Padding(
@@ -164,10 +196,6 @@ class _HomeState extends State<HomeScreen> {
           )
           .toList();
     }
-
-    // setState(() {
-    //   _foundTodos = results;
-    // });
   }
 
   void _handleToDoChange(ToDo todo) async {
