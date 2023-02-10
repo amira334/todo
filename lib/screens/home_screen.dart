@@ -1,6 +1,9 @@
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:todo/dbprovider.dart';
+import 'package:todo/screens/edit_task_screen.dart';
+import '../controllers/task_controller.dart';
 import '../model/todo.dart';
 //import '../widgets/search.dart';
 import '../widgets/todo_item.dart';
@@ -17,28 +20,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeState extends State<HomeScreen> {
-  late List<ToDo> todos;
+  final _taskController = Get.put(TaskController());
   bool isLoading = false;
-  List<ToDo> _foundTodos = [];
 
   @override
   void initState() {
     super.initState();
-    refreshToDos();
-    //_foundTodos = todos;
+    _taskController.getTasks();
   }
 
   @override
   void dispose() {
     TodosDatabase.instance.close();
     super.dispose();
-  }
-
-  Future refreshToDos() async {
-    setState(() => isLoading = true);
-    todos = await TodosDatabase.instance.readAllTodos();
-    _foundTodos = todos;
-    setState(() => isLoading = false);
   }
 
   @override
@@ -92,7 +86,7 @@ class _HomeState extends State<HomeScreen> {
               //   ),
               // ),
               Container(
-                margin: EdgeInsets.symmetric(vertical: 10),
+                margin: const EdgeInsets.symmetric(vertical: 10),
                 child: DatePicker(
                   DateTime.now(),
                   height: 100,
@@ -110,24 +104,30 @@ class _HomeState extends State<HomeScreen> {
                   )
                 ],
               ),
-              isLoading
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : todos.isEmpty
-                      ? const Center(child: Text('No tasks'))
-                      : Expanded(
-                          child: ListView.builder(
-                            itemCount: _foundTodos.length,
-                            itemBuilder: (context, index) {
-                              return ToDoItem(
-                                todo: _foundTodos[index],
+              Expanded(
+                child: Obx(
+                  () {
+                    return ListView.builder(
+                      itemCount: _taskController.taskList.length,
+                      itemBuilder: (_, index) {
+                        return AnimationConfiguration.staggeredList(
+                          position: index,
+                          child: SlideAnimation(
+                            child: FadeInAnimation(
+                              child: ToDoItem(
+                                todo: _taskController.taskList[index],
                                 onToDoChanged: _handleToDoChange,
                                 onDeleteItem: _handleDeleteItem,
-                              );
-                            },
+                                onEditItem: _handleEditItem,
+                              ),
+                            ),
                           ),
-                        )
+                        );
+                      },
+                    );
+                  },
+                ),
+              )
             ],
           ),
           Padding(
@@ -138,7 +138,10 @@ class _HomeState extends State<HomeScreen> {
               alignment: Alignment.bottomRight,
               child: Button(
                 label: '+ Add Task',
-                onTap: () => Get.to(const AddTaskScreen()),
+                onTap: () async {
+                  await Get.to(const AddTaskScreen());
+                  _taskController.getTasks();
+                },
               ),
             ),
           )
@@ -150,9 +153,9 @@ class _HomeState extends State<HomeScreen> {
   void runFilter(String enteredText) {
     List<ToDo> results = [];
     if (enteredText.isEmpty) {
-      results = todos;
+      results = _taskController.taskList;
     } else {
-      results = todos
+      results = _taskController.taskList
           .where(
             (element) => element.todoText
                 .toLowerCase()
@@ -161,9 +164,9 @@ class _HomeState extends State<HomeScreen> {
           .toList();
     }
 
-    setState(() {
-      _foundTodos = results;
-    });
+    // setState(() {
+    //   _foundTodos = results;
+    // });
   }
 
   void _handleToDoChange(ToDo todo) async {
@@ -171,11 +174,16 @@ class _HomeState extends State<HomeScreen> {
       isDone: todo.isDone == 0 ? 1 : 0,
     );
     await TodosDatabase.instance.update(obj);
-    refreshToDos();
+    _taskController.getTasks();
+  }
+
+  void _handleEditItem(ToDo todo) async {
+    await Get.to(EditTaskScreen(todo: todo));
+    _taskController.getTasks();
   }
 
   void _handleDeleteItem(todoId) async {
     await TodosDatabase.instance.delete(todoId);
-    refreshToDos();
+    _taskController.getTasks();
   }
 }
