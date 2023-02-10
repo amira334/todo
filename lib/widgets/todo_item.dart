@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:get/get.dart';
 import '../model/todo.dart';
+import '../screens/edit_task_screen.dart';
 
 class ToDoItem extends StatelessWidget {
   final ToDo todo;
   final onToDoChanged;
   final onDeleteItem;
+  final onEditItem;
   const ToDoItem(
       {Key? key,
       required this.todo,
       required this.onToDoChanged,
-      required this.onDeleteItem})
+      required this.onDeleteItem,
+      required this.onEditItem})
       : super(key: key);
 
   @override
@@ -23,7 +27,9 @@ class ToDoItem extends StatelessWidget {
           motion: const DrawerMotion(),
           children: [
             SlidableAction(
-              onPressed: (context) => {},
+              onPressed: (context) => {
+                onEditItem(todo),
+              },
               backgroundColor: const Color(0xFFbbdefb),
               foregroundColor: Colors.black,
               icon: Icons.edit,

@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:todo/controllers/task_controller.dart';
 import '../model/todo.dart';
 import '../widgets/input_field.dart';
 import 'package:intl/intl.dart';
 import '../widgets/button.dart';
+import '../dbprovider.dart';
 
-class AddTaskScreen extends StatefulWidget {
-  const AddTaskScreen({Key? key}) : super(key: key);
+class EditTaskScreen extends StatefulWidget {
+  final ToDo todo;
+  const EditTaskScreen({
+    Key? key,
+    required this.todo,
+  }) : super(key: key);
 
   @override
-  State<AddTaskScreen> createState() => _AddTaskScreenState();
+  State<EditTaskScreen> createState() => _EditTaskScreenState();
 }
 
-class _AddTaskScreenState extends State<AddTaskScreen> {
-  final TaskController _taskController = Get.put(TaskController());
+class _EditTaskScreenState extends State<EditTaskScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
   DateTime _selectedDate = DateTime.now();
@@ -22,6 +25,19 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   String _endTime = DateFormat('hh:mm a')
       .format(DateTime.now().add(const Duration(minutes: 10)))
       .toString();
+
+  @override
+  void initState() {
+    super.initState();
+    _titleController.text = widget.todo.todoText;
+    _noteController.text = widget.todo.note;
+    var date = widget.todo.date.split('/');
+    _selectedDate =
+        DateTime(int.parse(date[2]), int.parse(date[0]), int.parse(date[1]));
+
+    _startTime = widget.todo.startTime;
+    _endTime = widget.todo.endTime;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +63,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Add Task',
-                style: Theme.of(context).textTheme.headline6,
+                'Edit Task',
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               InputField(
                 title: 'Title',
@@ -108,7 +124,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   Container(
                       margin: const EdgeInsets.symmetric(vertical: 10),
                       child: Button(
-                        label: 'Create Task',
+                        label: 'Update Task',
                         onTap: () => _validatedData(),
                       )),
                 ],
@@ -122,13 +138,13 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
   _validatedData() async {
     if (_titleController.text.isNotEmpty && _noteController.text.isNotEmpty) {
-      _addTaskToDb();
+      _addTaskToDb(widget.todo);
 
       Get.back();
-      Get.snackbar('Success', 'Task created successfully',
+      Get.snackbar('Success', 'Task updated successfully',
           snackPosition: SnackPosition.TOP,
           icon: const Icon(Icons.check_circle_outline),
-          backgroundColor: const Color(0xffc0e5f9),
+          backgroundColor: const Color(0xffC3F8E3),
           colorText: Colors.black);
     } else if (_titleController.text.isEmpty || _noteController.text.isEmpty) {
       Get.snackbar('Required', 'All fields are required',
@@ -221,15 +237,14 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         });
   }
 
-  _addTaskToDb() async {
-    ToDo todo = await _taskController.addTask(
-      todo: ToDo(
-        todoText: _titleController.text,
-        note: _noteController.text,
-        date: DateFormat.yMd().format(_selectedDate),
-        startTime: _startTime,
-        endTime: _endTime,
-      ),
+  _addTaskToDb(todo) async {
+    final obj = todo.copy(
+      todoText: _titleController.text,
+      note: _noteController.text,
+      date: DateFormat.yMd().format(_selectedDate),
+      startTime: _startTime,
+      endTime: _endTime,
     );
+    await TodosDatabase.instance.update(obj);
   }
 }
