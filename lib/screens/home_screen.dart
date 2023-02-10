@@ -28,6 +28,7 @@ class _HomeState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _taskController.getTasks();
+    print(_taskController.taskList);
   }
 
   @override
@@ -112,55 +113,56 @@ class _HomeState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              _taskController.taskList.isEmpty
-                  ? Column(
-                      children: [
-                        Text(
-                          'No task added yet!',
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 18,
-                            color: Theme.of(context).colorScheme.tertiary,
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(
-                            vertical: 30,
-                          ),
-                          child: SizedBox(
-                            height: 200,
-                            child: Image.asset(
-                              'assets/images/task.png',
-                              fit: BoxFit.cover,
+              Expanded(
+                child: Obx(
+                  () {
+                    if (_taskController.taskList.isEmpty) {
+                      return Column(
+                        children: [
+                          Text(
+                            'No task added yet!',
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 18,
+                              color: Theme.of(context).colorScheme.tertiary,
                             ),
                           ),
-                        ),
-                      ],
-                    )
-                  : Expanded(
-                      child: Obx(
-                        () {
-                          return ListView.builder(
-                            itemCount: _taskController.taskList.length,
-                            itemBuilder: (_, index) {
-                              return AnimationConfiguration.staggeredList(
-                                position: index,
-                                child: SlideAnimation(
-                                  child: FadeInAnimation(
-                                    child: ToDoItem(
-                                      todo: _taskController.taskList[index],
-                                      onToDoChanged: _handleToDoChange,
-                                      onDeleteItem: _handleDeleteItem,
-                                      onEditItem: _handleEditItem,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        },
-                      ),
-                    )
+                          Container(
+                            margin: const EdgeInsets.symmetric(
+                              vertical: 30,
+                            ),
+                            child: SizedBox(
+                              height: 200,
+                              child: Image.asset(
+                                'assets/images/task.png',
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+                    return ListView.builder(
+                      itemCount: _taskController.taskList.length,
+                      itemBuilder: (_, index) {
+                        return AnimationConfiguration.staggeredList(
+                          position: index,
+                          child: SlideAnimation(
+                            child: FadeInAnimation(
+                              child: ToDoItem(
+                                todo: _taskController.taskList[index],
+                                onToDoChanged: _handleToDoChange,
+                                onDeleteItem: _handleDeleteItem,
+                                onEditItem: _handleEditItem,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+              )
             ],
           ),
           Padding(
