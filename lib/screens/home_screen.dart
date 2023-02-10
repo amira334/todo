@@ -73,7 +73,7 @@ class _HomeState extends State<HomeScreen> {
                     onPressed: () => {},
                     icon: const Icon(
                       Icons.search,
-                      color: Colors.black,
+                      color: Color(0xFF5d8e8a),
                       size: 24,
                     ),
                   )
