@@ -216,5 +216,10 @@ class _HomeState extends State<HomeScreen> {
   void _handleDeleteItem(todoId) async {
     await TodosDatabase.instance.delete(todoId);
     _taskController.getTasks();
+    Get.snackbar('Success', 'Task deleted successfully',
+        snackPosition: SnackPosition.TOP,
+        icon: const Icon(Icons.delete_outline),
+        backgroundColor: const Color(0xffccefc8),
+        colorText: Colors.black);
   }
 }
