@@ -65,13 +65,13 @@ class _HomeState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        DateFormat.yMMMMd().format(DateTime.now()),
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      Text(
                         'Today',
                         style: Theme.of(context).textTheme.titleLarge,
-                      )
+                      ),
+                      Text(
+                        DateFormat.yMMMMd().format(DateTime.now()),
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
                     ],
                   ),
                   IconButton(
@@ -95,21 +95,28 @@ class _HomeState extends State<HomeScreen> {
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 10),
                 child: DatePicker(
+                  dateTextStyle: const TextStyle(
+                    fontSize: 20,
+                    color: Color(0xFF5d8e8a),
+                  ),
                   DateTime.now(),
-                  height: 100,
-                  width: 80,
+                  height: 90,
+                  width: 70,
                   initialSelectedDate: DateTime.now(),
                   selectionColor: Theme.of(context).colorScheme.secondary,
                   selectedTextColor: Colors.black,
                 ),
               ),
-              Row(
-                children: [
-                  Text(
-                    'My Task',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  )
-                ],
+              Container(
+                margin: const EdgeInsets.only(bottom: 10),
+                child: Row(
+                  children: [
+                    Text(
+                      'My Task',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    )
+                  ],
+                ),
               ),
               isLoading
                   ? const Center(
@@ -123,7 +130,7 @@ class _HomeState extends State<HomeScreen> {
                               'No task added yet!',
                               style: TextStyle(
                                 fontFamily: 'Poppins',
-                                fontSize: 20,
+                                fontSize: 18,
                                 color: Theme.of(context).colorScheme.tertiary,
                               ),
                             ),
@@ -132,17 +139,15 @@ class _HomeState extends State<HomeScreen> {
                             // ),
                             Container(
                               margin: const EdgeInsets.symmetric(
-                                vertical: 20,
+                                vertical: 30,
                               ),
-                              child: Center(
-                                child: SizedBox(
-                                  height: 200,
-                                  //height: constraints.maxHeight * 0.5,
-                                  child: Image.asset(
-                                    'assets/images/task.png',
-                                    fit: BoxFit.cover,
-                                    // alignment: Alignment.center,
-                                  ),
+                              child: SizedBox(
+                                height: 200,
+                                //height: constraints.maxHeight * 0.5,
+                                child: Image.asset(
+                                  'assets/images/task.png',
+                                  fit: BoxFit.cover,
+                                  // alignment: Alignment.center,
                                 ),
                               ),
                             ),

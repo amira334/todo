@@ -136,7 +136,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       Get.snackbar('Success', 'Task created successfully',
           snackPosition: SnackPosition.TOP,
           icon: const Icon(Icons.check_circle_outline),
-          backgroundColor: const Color(0xffC3F8E3),
+          backgroundColor: const Color(0xffc0e5f9),
           colorText: Colors.black);
     } else if (_titleController.text.isEmpty || _noteController.text.isEmpty) {
       Get.snackbar('Required', 'All fields are required',
@@ -184,7 +184,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   }
 
   _getTime({required bool isStartTime}) async {
-    _showTimePicker();
     var pickedTime = await _showTimePicker();
     String _formatedTime = pickedTime.format(context);
     if (pickedTime == null) {

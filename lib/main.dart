@@ -35,10 +35,11 @@ class MyApp extends StatelessWidget {
           ),
         ),
         textTheme: theme.textTheme.copyWith(
-          bodyLarge: const TextStyle(
+          bodySmall: const TextStyle(
             fontFamily: 'Poppins',
             fontSize: 14,
-            color: Colors.black54,
+            color: Colors.black26,
+            fontWeight: FontWeight.bold,
           ),
           bodyMedium: const TextStyle(
               color: Colors.black,

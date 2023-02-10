@@ -43,6 +43,7 @@ class ToDoItem extends StatelessWidget {
           ],
         ),
         child: Container(
+
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(20),
@@ -70,10 +71,10 @@ class ToDoItem extends StatelessWidget {
             title: Column(
               children: [
                 Text(
-                  textAlign: TextAlign.start,
+                  //textAlign: TextAlign.start,
                   todo.todoText,
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                     color: Colors.black,
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.bold,
@@ -81,16 +82,16 @@ class ToDoItem extends StatelessWidget {
                         todo.isDone == 1 ? TextDecoration.lineThrough : null,
                   ),
                 ),
-                Row(
-                  children: [
-                    Text(
-                        todo.startTime
-                    ),
-                    Text(
-                      todo.endTime
-                    )
-                  ],
-                )
+                // Row(
+                //   children: [
+                //     Text(
+                //         todo.startTime
+                //     ),
+                //     Text(
+                //       todo.endTime
+                //     )
+                //   ],
+                // )
               ],
             ),
           ),
