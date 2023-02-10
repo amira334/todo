@@ -7,6 +7,7 @@ import '../controllers/task_controller.dart';
 import '../model/todo.dart';
 
 //import '../widgets/search.dart';
+import '../widgets/search.dart';
 import '../widgets/todo_item.dart';
 import 'package:intl/intl.dart';
 import '../widgets/button.dart';
@@ -22,13 +23,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeState extends State<HomeScreen> {
   final _taskController = Get.put(TaskController());
-  bool isLoading = false;
+  RxList<ToDo> filteredTasks = <ToDo>[].obs;
+  bool showSearchWidget = false;
 
   @override
   void initState() {
     super.initState();
-    _taskController.getTasks();
-    print(_taskController.taskList);
+    filteredTasks.value = _taskController.taskList;
   }
 
   @override
@@ -70,7 +71,7 @@ class _HomeState extends State<HomeScreen> {
                     ],
                   ),
                   IconButton(
-                    onPressed: () => {},
+                    onPressed: handleSearch,
                     icon: const Icon(
                       Icons.search,
                       color: Color(0xFF5d8e8a),
@@ -79,14 +80,15 @@ class _HomeState extends State<HomeScreen> {
                   )
                 ],
               ),
-              // Container(
-              //   margin: const EdgeInsets.symmetric(
-              //     vertical: 10,
-              //   ),
-              //   child: Search(
-              //     runFilter: runFilter,
-              //   ),
-              // ),
+              if (showSearchWidget == true)
+                Container(
+                  margin: const EdgeInsets.symmetric(
+                    vertical: 10,
+                  ),
+                  child: Search(
+                    runFilter: runFilter,
+                  ),
+                ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 10),
                 child: DatePicker(
@@ -116,11 +118,11 @@ class _HomeState extends State<HomeScreen> {
               Expanded(
                 child: Obx(
                   () {
-                    if (_taskController.taskList.isEmpty) {
+                    if (filteredTasks.isEmpty) {
                       return Column(
                         children: [
                           Text(
-                            'No task added yet!',
+                            'No task found!',
                             style: TextStyle(
                               fontFamily: 'Poppins',
                               fontSize: 18,
@@ -143,14 +145,14 @@ class _HomeState extends State<HomeScreen> {
                       );
                     }
                     return ListView.builder(
-                      itemCount: _taskController.taskList.length,
+                      itemCount: filteredTasks.length,
                       itemBuilder: (_, index) {
                         return AnimationConfiguration.staggeredList(
                           position: index,
                           child: SlideAnimation(
                             child: FadeInAnimation(
                               child: ToDoItem(
-                                todo: _taskController.taskList[index],
+                                todo: filteredTasks[index],
                                 onToDoChanged: _handleToDoChange,
                                 onDeleteItem: _handleDeleteItem,
                                 onEditItem: _handleEditItem,
@@ -185,19 +187,27 @@ class _HomeState extends State<HomeScreen> {
     );
   }
 
-  void runFilter(String enteredText) {
-    List<ToDo> results = [];
-    if (enteredText.isEmpty) {
-      results = _taskController.taskList;
+  void runFilter(String enteredKeyword) {
+    RxList<ToDo> results = <ToDo>[].obs;
+    if (enteredKeyword.isEmpty) {
+      results.value = _taskController.taskList;
     } else {
-      results = _taskController.taskList
-          .where(
-            (element) => element.todoText
-                .toLowerCase()
-                .contains(enteredText.toLowerCase()),
-          )
+      results.value = _taskController.taskList
+          .where((task) => task.todoText
+              .toLowerCase()
+              .contains(enteredKeyword.toLowerCase()))
           .toList();
     }
+
+    setState(() {
+      filteredTasks.value = results;
+    });
+  }
+
+  void handleSearch() {
+    setState(() {
+      showSearchWidget = !showSearchWidget;
+    });
   }
 
   void _handleToDoChange(ToDo todo) async {
