@@ -5,6 +5,7 @@ import 'package:todo/dbprovider.dart';
 import 'package:todo/screens/edit_task_screen.dart';
 import '../controllers/task_controller.dart';
 import '../model/todo.dart';
+
 //import '../widgets/search.dart';
 import '../widgets/todo_item.dart';
 import 'package:intl/intl.dart';
@@ -132,7 +133,7 @@ class _HomeState extends State<HomeScreen> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(
-              vertical: 15,
+              vertical: 18,
             ),
             child: Align(
               alignment: Alignment.bottomRight,
