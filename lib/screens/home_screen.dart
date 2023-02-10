@@ -5,8 +5,6 @@ import 'package:todo/dbprovider.dart';
 import 'package:todo/screens/edit_task_screen.dart';
 import '../controllers/task_controller.dart';
 import '../model/todo.dart';
-
-//import '../widgets/search.dart';
 import '../widgets/search.dart';
 import '../widgets/todo_item.dart';
 import 'package:intl/intl.dart';
@@ -25,6 +23,7 @@ class _HomeState extends State<HomeScreen> {
   final _taskController = Get.put(TaskController());
   RxList<ToDo> filteredTasks = <ToDo>[].obs;
   bool showSearchWidget = false;
+  DateTime? selectedDate;
 
   @override
   void initState() {
@@ -61,13 +60,19 @@ class _HomeState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Today',
+                        selectedDate != null
+                            ? DateFormat.yMd().format(selectedDate!) ==
+                                    DateFormat.yMd().format(DateTime.now())
+                                ? 'Today'
+                                : 'Showing tasks for'
+                            : 'All',
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
-                      Text(
-                        DateFormat.yMMMMd().format(DateTime.now()),
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
+                      if (selectedDate != null)
+                        Text(
+                          DateFormat.yMMMMd().format(selectedDate!),
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
                     ],
                   ),
                   IconButton(
@@ -99,22 +104,27 @@ class _HomeState extends State<HomeScreen> {
                   DateTime.now(),
                   height: 90,
                   width: 70,
-                  initialSelectedDate: DateTime.now(),
                   selectionColor: Theme.of(context).colorScheme.secondary,
                   selectedTextColor: Colors.black,
+                  onDateChange: (date) {
+                    setState(() {
+                      selectedDate = date;
+                    });
+                    dateFilter(DateFormat.yMd().format(date));
+                  },
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.only(bottom: 10),
-                child: Row(
-                  children: [
-                    Text(
-                      'My Task',
-                      style: Theme.of(context).textTheme.titleLarge,
-                    )
-                  ],
-                ),
-              ),
+              // Container(
+              //   margin: const EdgeInsets.only(bottom: 10),
+              //   child: Row(
+              //     children: [
+              //       Text(
+              //         'My Task',
+              //         style: Theme.of(context).textTheme.titleLarge,
+              //       )
+              //     ],
+              //   ),
+              // ),
               Expanded(
                 child: Obx(
                   () {
@@ -198,6 +208,16 @@ class _HomeState extends State<HomeScreen> {
               .contains(enteredKeyword.toLowerCase()))
           .toList();
     }
+
+    setState(() {
+      filteredTasks.value = results;
+    });
+  }
+
+  void dateFilter(String date) {
+    RxList<ToDo> results = <ToDo>[].obs;
+    results.value =
+        _taskController.taskList.where((task) => task.date == date).toList();
 
     setState(() {
       filteredTasks.value = results;
