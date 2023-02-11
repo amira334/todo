@@ -16,21 +16,21 @@ class Search extends StatelessWidget {
       child: TextField(
         cursorColor: Theme.of(context).textSelectionTheme.cursorColor,
         onChanged: (value) => runFilter(value),
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
             //labelText: 'Search',
             contentPadding: const EdgeInsets.all(0),
-            suffixIcon: Icon(
-              Icons.search,
-              color: Theme.of(context).colorScheme.tertiary,
-              size: 24,
-            ),
-            suffixIconConstraints: const BoxConstraints(
+            // suffixIcon: Icon(
+            //   Icons.search,
+            //   color: Theme.of(context).colorScheme.tertiary,
+            //   size: 24,
+            // ),
+            suffixIconConstraints: BoxConstraints(
               maxHeight: 20,
               minWidth: 20,
             ),
             border: InputBorder.none,
             hintText: 'Find Your task',
-            hintStyle: const TextStyle(
+            hintStyle: TextStyle(
               color: Colors.black12,
               //color: Theme.of(context).colorScheme.secondary,
               fontFamily: 'Poppins',

@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:todo/dbprovider.dart';
 import 'package:todo/screens/edit_task_screen.dart';
+import 'package:todo/widgets/task_tile.dart';
 import '../controllers/task_controller.dart';
 import '../model/todo.dart';
-
-//import '../widgets/search.dart';
 import '../widgets/search.dart';
-import '../widgets/todo_item.dart';
 import 'package:intl/intl.dart';
 import '../widgets/button.dart';
 import 'add_task_screen.dart';
@@ -25,11 +23,20 @@ class _HomeState extends State<HomeScreen> {
   final _taskController = Get.put(TaskController());
   RxList<ToDo> filteredTasks = <ToDo>[].obs;
   bool showSearchWidget = false;
+  DateTime? selectedDate;
 
   @override
   void initState() {
-    super.initState();
     filteredTasks.value = _taskController.taskList;
+    super.initState();
+  }
+
+  void clearState() {
+    setState(() {
+      showSearchWidget = false;
+      selectedDate = null;
+      filteredTasks.value = _taskController.taskList;
+    });
   }
 
   @override
@@ -61,13 +68,19 @@ class _HomeState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Today',
+                        selectedDate != null
+                            ? DateFormat.yMd().format(selectedDate!) ==
+                                    DateFormat.yMd().format(DateTime.now())
+                                ? 'Today'
+                                : 'Showing tasks for'
+                            : 'All',
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
-                      Text(
-                        DateFormat.yMMMMd().format(DateTime.now()),
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
+                      if (selectedDate != null)
+                        Text(
+                          DateFormat.yMMMMd().format(selectedDate!),
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
                     ],
                   ),
                   IconButton(
@@ -99,22 +112,27 @@ class _HomeState extends State<HomeScreen> {
                   DateTime.now(),
                   height: 90,
                   width: 70,
-                  initialSelectedDate: DateTime.now(),
                   selectionColor: Theme.of(context).colorScheme.secondary,
                   selectedTextColor: Colors.black,
+                  onDateChange: (date) {
+                    setState(() {
+                      selectedDate = date;
+                    });
+                    dateFilter(DateFormat.yMd().format(date));
+                  },
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.only(bottom: 10),
-                child: Row(
-                  children: [
-                    Text(
-                      'My Task',
-                      style: Theme.of(context).textTheme.titleLarge,
-                    )
-                  ],
-                ),
-              ),
+              // Container(
+              //   margin: const EdgeInsets.only(bottom: 10),
+              //   child: Row(
+              //     children: [
+              //       Text(
+              //         'My Task',
+              //         style: Theme.of(context).textTheme.titleLarge,
+              //       )
+              //     ],
+              //   ),
+              // ),
               Expanded(
                 child: Obx(
                   () {
@@ -151,11 +169,14 @@ class _HomeState extends State<HomeScreen> {
                           position: index,
                           child: SlideAnimation(
                             child: FadeInAnimation(
-                              child: ToDoItem(
-                                todo: filteredTasks[index],
-                                onToDoChanged: _handleToDoChange,
-                                onDeleteItem: _handleDeleteItem,
-                                onEditItem: _handleEditItem,
+                              child: GestureDetector(
+                                onTap: () =>
+                                    _handleToDoChange(filteredTasks[index]),
+                                child: TaskTile(
+                                  task: filteredTasks[index],
+                                  onDeleteItem: _handleDeleteItem,
+                                  onEditItem: _handleEditItem,
+                                ),
                               ),
                             ),
                           ),
@@ -176,8 +197,9 @@ class _HomeState extends State<HomeScreen> {
               child: Button(
                 label: '+ Add Task',
                 onTap: () async {
-                  await Get.to(const AddTaskScreen());
+                  await Get.to(() => const AddTaskScreen());
                   _taskController.getTasks();
+                  clearState();
                 },
               ),
             ),
@@ -188,11 +210,11 @@ class _HomeState extends State<HomeScreen> {
   }
 
   void runFilter(String enteredKeyword) {
-    RxList<ToDo> results = <ToDo>[].obs;
+    List<ToDo> results = [];
     if (enteredKeyword.isEmpty) {
-      results.value = _taskController.taskList;
+      results = _taskController.taskList;
     } else {
-      results.value = _taskController.taskList
+      results = _taskController.taskList
           .where((task) => task.todoText
               .toLowerCase()
               .contains(enteredKeyword.toLowerCase()))
@@ -200,6 +222,17 @@ class _HomeState extends State<HomeScreen> {
     }
 
     setState(() {
+      selectedDate = null;
+      filteredTasks.value = results;
+    });
+  }
+
+  void dateFilter(String date) {
+    List<ToDo> results = [];
+    results =
+        _taskController.taskList.where((task) => task.date == date).toList();
+    setState(() {
+      showSearchWidget = false;
       filteredTasks.value = results;
     });
   }
@@ -216,16 +249,19 @@ class _HomeState extends State<HomeScreen> {
     );
     await TodosDatabase.instance.update(obj);
     _taskController.getTasks();
+    clearState();
   }
 
   void _handleEditItem(ToDo todo) async {
-    await Get.to(EditTaskScreen(todo: todo));
+    await Get.to(() => EditTaskScreen(todo: todo));
     _taskController.getTasks();
+    clearState();
   }
 
   void _handleDeleteItem(todoId) async {
     await TodosDatabase.instance.delete(todoId);
     _taskController.getTasks();
+    clearState();
     Get.snackbar('Success', 'Task deleted successfully',
         snackPosition: SnackPosition.TOP,
         icon: const Icon(Icons.delete_outline),
